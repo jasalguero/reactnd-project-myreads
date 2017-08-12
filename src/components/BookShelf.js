@@ -36,7 +36,7 @@ function BookShelf({ title, books, shelf, onMoveBook }) {
                 <div className="book-authors">
                   {book.authors.map((author, index) =>
                     <span key={`author-${index + 1}`}>
-                      {author} {index > book.authors.length && " ,"}
+                      {author}{index + 1 < book.authors.length && ", "}
                     </span>
                   )}
                 </div>
