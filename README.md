@@ -21,7 +21,6 @@ Of course, you are free to start this project from scratch if you wish! Just be 
  |-- index.js - You should not need to modify this file. It is used for DOM rendering only.
  |-- index.css - Global styles. You probably won't need to change anything here.
 |-- .gitignore 
-|-- CONTRIBUTING.MD - Information about contributing to this repo. 
 TL;DR - Fork and clone your own version of this to use it.
 |-- README.MD - This README file.
 |-- SEARCH_TERMS.md - The whitelisted short collection of available search terms 
