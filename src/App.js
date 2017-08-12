@@ -21,6 +21,8 @@ class BooksApp extends React.Component {
 
   /**
    * Call the API to update the book's shelf and the update the state
+   * @param {*} book 
+   * @param {*} shelf 
    */
   moveBook = (book, shelf) => {
     BooksAPI.update(book, shelf).then(updatedBook => {

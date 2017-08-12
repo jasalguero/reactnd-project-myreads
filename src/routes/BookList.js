@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import AddBookLink from "../components/AddBookLink";
 import BookShelf from "../components/BookShelf";
 
@@ -6,13 +7,13 @@ import BookShelf from "../components/BookShelf";
  * Stateles component that renders the different shelves
  * @param {*} props 
  */
-function BookListRoute(props) {
+function BookListRoute({ books, onMoveBook }) {
   const currentReadingBooks = [];
   const wantToReadBooks = [];
   const readBooks = [];
 
   // get the books for each shelf
-  props.books.forEach(b => {
+  books.forEach(b => {
     switch (b.shelf) {
       case "currentlyReading":
         currentReadingBooks.push(b);
@@ -39,19 +40,19 @@ function BookListRoute(props) {
             title="Currently Reading"
             shelf="currentlyReading"
             books={currentReadingBooks}
-            onMoveBook={props.onMoveBook}
+            onMoveBook={onMoveBook}
           />
           <BookShelf
             title="Want To Read"
             shelf="wantToRead"
             books={wantToReadBooks}
-            onMoveBook={props.onMoveBook}
+            onMoveBook={onMoveBook}
           />
           <BookShelf
             title="Read"
             shelf="read"
             books={readBooks}
-            onMoveBook={props.onMoveBook}
+            onMoveBook={onMoveBook}
           />
         </div>
       </div>
@@ -59,5 +60,10 @@ function BookListRoute(props) {
     </div>
   );
 }
+
+BookListRoute.propTypes = {
+  books: PropTypes.array.isRequired,
+  onMoveBook: PropTypes.func.isRequired
+};
 
 export default BookListRoute;
