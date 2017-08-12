@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AddBookLink from "../components/AddBookLink";
 
 class BookListRoute extends Component {
   render() {
@@ -248,11 +249,7 @@ class BookListRoute extends Component {
             </div>
           </div>
         </div>
-        <div className="open-search">
-          <a onClick={() => this.setState({ showSearchPage: true })}>
-            Add a book
-          </a>
-        </div>
+        <AddBookLink />
       </div>
     );
   }
