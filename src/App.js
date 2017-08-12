@@ -7,7 +7,8 @@ import SearchRoute from "./routes/Search";
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    searchBooks: []
   };
 
   /**
@@ -29,12 +30,36 @@ class BooksApp extends React.Component {
       // update the book shelf locally and the update the state
       const books = this.state.books;
       const bookIndex = books.findIndex(b => b.id === book.id);
+      console.log('updating book', bookIndex);
       if (bookIndex > -1) {
         books[bookIndex].shelf = shelf;
         this.setState({ books });
       }
     });
   };
+
+  /**
+   * Perform a search on the query passed and updates the state 
+   * @param {*} query 
+   */
+  searchBooks = query => {
+    if (query) {
+      BooksAPI.search(query, 100).then(result => {
+        const books = result.length > 0 ? result : [];
+        this.updateSearchBooks(books);
+      });
+    } else {
+      this.updateSearchBooks([]);
+    }
+  };
+
+  /**
+   * Updates the state with new search books
+   * @param {*} books 
+   */
+  updateSearchBooks(books) {
+    this.setState({ searchBooks: books });
+  }
 
   render() {
     return (
@@ -48,7 +73,15 @@ class BooksApp extends React.Component {
               onMoveBook={this.moveBook}
             />}
         />
-        <Route path="/search" component={SearchRoute} />
+        <Route
+          path="/search"
+          render={() =>
+            <SearchRoute
+              books={this.state.searchBooks}
+              onSearch={this.searchBooks}
+              onMoveBook={this.moveBook}
+            />}
+        />
       </div>
     );
   }

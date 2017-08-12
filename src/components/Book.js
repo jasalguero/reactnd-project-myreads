@@ -25,12 +25,13 @@ function Book({ book, shelf, onMoveBook }) {
         {book.title}
       </div>
       <div className="book-authors">
-        {book.authors.map((author, index) =>
-          <span key={`author-${index + 1}`}>
-            {author}
-            {index + 1 < book.authors.length && ", "}
-          </span>
-        )}
+        {book.authors &&
+          book.authors.map((author, index) =>
+            <span key={`author-${index + 1}`}>
+              {author}
+              {index + 1 < book.authors.length && ", "}
+            </span>
+          )}
       </div>
     </div>
   );

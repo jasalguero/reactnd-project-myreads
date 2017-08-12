@@ -1,7 +1,26 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Book from "../components/Book";
+import * as Functions from "../utils/functions";
 
 class SearchRoute extends Component {
+  state = {
+    query: ""
+  };
+
+  /**
+   * Debounced function that is only called every 250ms at most
+   */
+  triggerSearch = Functions.debounce(query => {
+    this.props.onSearch(query);
+  }, 250);
+
+  updateQuery(query) {
+    this.setState({ query: query.trim() });
+    this.triggerSearch(query);
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -10,23 +29,32 @@ class SearchRoute extends Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
-            {/* 
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-                  
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-            <input type="text" placeholder="Search by title or author" />
+            <input
+              type="text"
+              value={this.state.query}
+              onChange={event => this.updateQuery(event.target.value)}
+              placeholder="Search by title or author"
+            />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ol className="books-grid">
+            {this.props.books.map(book =>
+              <li key={book.id}>
+                <Book book={book} shelf="none" onMoveBook={this.props.onMoveBook} />
+              </li>
+            )}
+          </ol>
         </div>
       </div>
     );
   }
 }
+
+SearchRoute.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+  books: PropTypes.array.isRequired,
+  onMoveBook: PropTypes.func.isRequired
+};
 
 export default SearchRoute;
