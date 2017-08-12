@@ -24,7 +24,7 @@ function BookListRoute(props) {
         readBooks.push(b);
         break;
       default:
-        //do nothing
+      //do nothing
     }
   });
 
@@ -35,9 +35,24 @@ function BookListRoute(props) {
       </div>
       <div className="list-books-content">
         <div>
-          <BookShelf title="Currently Reading" books={currentReadingBooks} />
-          <BookShelf title="Want To Read" books={wantToReadBooks} />
-          <BookShelf title="Read" books={readBooks} />
+          <BookShelf
+            title="Currently Reading"
+            shelf="currentlyReading"
+            books={currentReadingBooks}
+            onMoveBook={props.onMoveBook}
+          />
+          <BookShelf
+            title="Want To Read"
+            shelf="wantToRead"
+            books={wantToReadBooks}
+            onMoveBook={props.onMoveBook}
+          />
+          <BookShelf
+            title="Read"
+            shelf="read"
+            books={readBooks}
+            onMoveBook={props.onMoveBook}
+          />
         </div>
       </div>
       <AddBookLink />

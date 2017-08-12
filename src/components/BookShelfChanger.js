@@ -1,9 +1,18 @@
 import React from "react";
 
-function BookShelfChanger(props) {
+/**
+ * Stateless component to handle changing a book's shelf
+ * @param {*} param0 
+ */
+function BookShelfChanger({ shelf, onChangeShelf }) {
   return (
     <div className="book-shelf-changer">
-      <select>
+      <select
+        value={shelf}
+        onChange={event => {
+          onChangeShelf(event.target.value);
+        }}
+      >
         <option value="none" disabled>
           Move to...
         </option>
