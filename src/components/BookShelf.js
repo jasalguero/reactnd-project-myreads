@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BookShelfChanger from "./BookShelfChanger";
+import Book from "./Book";
 
 function BookShelf({ title, books, shelf, onMoveBook }) {
   return (
@@ -12,35 +12,7 @@ function BookShelf({ title, books, shelf, onMoveBook }) {
         <ol className="books-grid">
           {books.map(book =>
             <li key={book.id}>
-              <div className="book">
-                <div className="book-top">
-                  <div
-                    className="book-cover"
-                    style={{
-                      width: 128,
-                      height: 193,
-                      backgroundImage: `url("${book.imageLinks
-                        .smallThumbnail}")`
-                    }}
-                  />
-                  <BookShelfChanger
-                    shelf={shelf}
-                    onChangeShelf={newShelf => {
-                      onMoveBook(book, newShelf);
-                    }}
-                  />
-                </div>
-                <div className="book-title">
-                  {book.title}
-                </div>
-                <div className="book-authors">
-                  {book.authors.map((author, index) =>
-                    <span key={`author-${index + 1}`}>
-                      {author}{index + 1 < book.authors.length && ", "}
-                    </span>
-                  )}
-                </div>
-              </div>
+              <Book book={book} shelf={shelf} onMoveBook={onMoveBook} />
             </li>
           )}
         </ol>
