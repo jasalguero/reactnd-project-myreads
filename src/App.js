@@ -7,8 +7,8 @@ import SearchRoute from "./routes/Search";
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    searchBooks: []
+    books: [], // existing books
+    searchBooks: [] // books matching searh
   };
 
   /**
@@ -25,18 +25,42 @@ class BooksApp extends React.Component {
    * @param {*} book 
    * @param {*} shelf 
    */
-  moveBook = (book, shelf) => {
+  updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf).then(updatedBook => {
-      // update the book shelf locally and the update the state
-      const books = this.state.books;
-      const bookIndex = books.findIndex(b => b.id === book.id);
-      console.log('updating book', bookIndex);
-      if (bookIndex > -1) {
-        books[bookIndex].shelf = shelf;
-        this.setState({ books });
+      if (shelf === "none") {
+        this.removeBookFromShelf(book, shelf);
+      } else {
+        this.moveBook(book, shelf);
       }
     });
   };
+
+  /**
+   * Move book to another shelf
+   * @param {*} book 
+   * @param {*} shelf 
+   */
+  moveBook(book, shelf) {
+    const books = this.state.books;
+    const bookIndex = books.findIndex(b => b.id === book.id);
+
+    // book exists
+    if (bookIndex > -1) {
+      books[bookIndex].shelf = shelf;
+      this.setState({ books });
+    } else {
+      book.shelf = shelf;
+      this.setState({ books: this.state.books.concat([book]) });
+    }
+  }
+
+  /**
+   * Remove book from the shelf
+   * @param {*} book 
+   */
+  removeBookFromShelf(book) {
+    this.setState({ books: this.state.books.filter(b => b.id !== book.id) });
+  }
 
   /**
    * Perform a search on the query passed and updates the state 
@@ -70,7 +94,7 @@ class BooksApp extends React.Component {
           render={() =>
             <BookListRoute
               books={this.state.books}
-              onMoveBook={this.moveBook}
+              onMoveBook={this.updateBook}
             />}
         />
         <Route
@@ -79,7 +103,7 @@ class BooksApp extends React.Component {
             <SearchRoute
               books={this.state.searchBooks}
               onSearch={this.searchBooks}
-              onMoveBook={this.moveBook}
+              onMoveBook={this.updateBook}
             />}
         />
       </div>

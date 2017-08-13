@@ -1,16 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 /**
- * Stateless component to handle changing a book's shelf
- * @param {*} param0 
+ * Stateless component to handle changing a book's shelf 
  */
-function BookShelfChanger({ shelf, onChangeShelf }) {
+function BookShelfChanger({ shelf, onMoveBook }) {
   return (
     <div className="book-shelf-changer">
       <select
         value={shelf}
         onChange={event => {
-          onChangeShelf(event.target.value);
+          onMoveBook(event.target.value);
         }}
       >
         <option value="none" disabled>
@@ -24,5 +24,10 @@ function BookShelfChanger({ shelf, onChangeShelf }) {
     </div>
   );
 }
+
+BookShelfChanger.propTypes = {
+  shelf: PropTypes.string.isRequired,
+  onMoveBook: PropTypes.func.isRequired
+};
 
 export default BookShelfChanger;

@@ -16,7 +16,7 @@ function Book({ book, shelf, onMoveBook }) {
         />
         <BookShelfChanger
           shelf={shelf}
-          onChangeShelf={newShelf => {
+          onMoveBook={newShelf => {
             onMoveBook(book, newShelf);
           }}
         />
