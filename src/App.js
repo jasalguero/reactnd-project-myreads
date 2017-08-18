@@ -70,6 +70,12 @@ class BooksApp extends React.Component {
     if (query) {
       BooksAPI.search(query, 100).then(result => {
         const books = result.length > 0 ? result : [];
+        // mark the searched books with the corresponding shelves
+        books.forEach(b => {
+          const foundBook = this.state.books.find(book => book.id === b.id);
+          b.shelf = foundBook ? foundBook.shelf : "none";
+        });
+
         this.updateSearchBooks(books);
       });
     } else {

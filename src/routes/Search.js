@@ -41,7 +41,7 @@ class SearchRoute extends Component {
           <ol className="books-grid">
             {this.props.books.map(book =>
               <li key={book.id}>
-                <Book book={book} shelf="none" onMoveBook={this.props.onMoveBook} />
+                <Book book={book} shelf={book.shelf} onMoveBook={this.props.onMoveBook} />
               </li>
             )}
           </ol>
