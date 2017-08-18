@@ -27,11 +27,9 @@ class BooksApp extends React.Component {
    */
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf).then(updatedBook => {
-      if (shelf === "none") {
-        this.removeBookFromShelf(book, shelf);
-      } else {
-        this.moveBook(book, shelf);
-      }
+      shelf === "none"
+        ? this.removeBookFromShelf(book, shelf)
+        : this.moveBook(book, shelf);
     });
   };
 
